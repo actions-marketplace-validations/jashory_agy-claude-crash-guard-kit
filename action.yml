@@ -1,0 +1,17 @@
+name: 'AGY & Claude Crash Guard Kit'
+description: 'Prevent HTTP 400 INVALID_ARGUMENT crashes, encrypted PDF trajectory poisoning, and stop-hook loops.'
+author: 'HM Shihabuddin Jashory (@jashory)'
+branding:
+  icon: 'shield'
+  color: 'green'
+inputs:
+  mode:
+    description: 'Execution mode (--self-test or --diagnose)'
+    required: false
+    default: '--self-test'
+runs:
+  using: 'composite'
+  steps:
+    - name: Run Crash Guard Verification
+      shell: bash
+      run: python3 "${{ github.action_path }}/crash_guard.py" ${{ inputs.mode }}

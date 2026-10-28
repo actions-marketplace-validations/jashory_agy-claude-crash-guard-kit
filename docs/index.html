@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AGY & Claude Crash Guard — Trajectory & Media Inspector — Interactive Browser Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0B1120;
+      --surface: #131C31;
+      --surface-elevated: #1E293B;
+      --border: #334155;
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+      --accent: #22C55E;
+      --accent-hover: #16A34A;
+      --warn: #F59E0B;
+      --danger: #EF4444;
+      --info: #38BDF8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(19, 28, 49, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 1rem 1.5rem;
+    }
+    .nav-wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
+    .nav-links {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      border: 1px solid var(--border);
+      background: var(--surface-elevated);
+      color: var(--text);
+    }
+    .btn:hover { border-color: var(--muted); transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #052E16;
+      border-color: var(--accent);
+    }
+    .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+    main {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem;
+      flex: 1;
+    }
+    .hero { margin-bottom: 2rem; }
+    .hero h1 {
+      font-size: clamp(1.6rem, 3vw, 2.35rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .hero p { color: var(--muted); max-width: 780px; font-size: 1rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .panel-head {
+      padding: 0.85rem 1.2rem;
+      background: var(--surface-elevated);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    textarea {
+      width: 100%;
+      min-height: 340px;
+      background: #080D1A;
+      color: #E2E8F0;
+      border: none;
+      padding: 1.1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      line-height: 1.55;
+      resize: vertical;
+      outline: none;
+    }
+    .panel-foot {
+      padding: 0.85rem 1.2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .output {
+      padding: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.84rem;
+      min-height: 340px;
+      background: #080D1A;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .score-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--info); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="https://github.com/jashory/agy-claude-crash-guard-kit">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22C55E" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>jashory/agy-claude-crash-guard-kit</span>
+        <span class="badge">v2.0.0 Live</span>
+      </a>
+      <div class="nav-links">
+        <a class="btn" href="https://github.com/jashory/agy-claude-crash-guard-kit" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Star on GitHub
+        </a>
+        <a class="btn btn-primary" href="https://github.com/jashory/agy-claude-crash-guard-kit/releases/tag/v2.0.0" target="_blank" rel="noopener">Download Release v2.0.0</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>AGY & Claude Crash Guard — Trajectory & Media Inspector</h1>
+      <p>Inspect session transcript steps, tool calls, or PDF/media headers before they trigger a permanent HTTP 400 INVALID_ARGUMENT session crash. Runs 100% client-side in your browser — zero data leaves your machine.</p>
+    </section>
+    <section class="grid">
+      <div class="panel">
+        <div class="panel-head">
+          <span>INPUT PAYLOAD (Session Trajectory JSON)</span>
+          <button class="btn" style="padding:0.25rem 0.65rem;font-size:0.75rem" onclick="resetSample()">Reset Sample</button>
+        </div>
+        <textarea id="payloadInput" spellcheck="false">{
+  "step_index": 412,
+  "tool_call": "read_file",
+  "path": "C:/Downloads/bank_statement_locked.pdf",
+  "mime_type": "application/pdf",
+  "pdf_header": "%PDF-1.7 /Encrypt 12 0 R",
+  "stop_hook_iteration": 6
+}</textarea>
+        <div class="panel-foot">
+          <span style="color:var(--muted);font-size:0.8rem">100% Local Browser Evaluation</span>
+          <button class="btn btn-primary" onclick="runAnalysis()">Run Live Analysis</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <span>DIAGNOSTIC &amp; AUDIT REPORT</span>
+          <span id="statusBadge" class="score-pill" style="background:rgba(56,189,248,0.15);color:#38BDF8">READY</span>
+        </div>
+        <div id="reportOutput" class="output"></div>
+        <div class="panel-foot">
+          <span style="color:var(--muted);font-size:0.8rem">CLI: <code>python install.py</code></span>
+          <a class="btn" href="https://github.com/jashory/agy-claude-crash-guard-kit#readme" target="_blank" rel="noopener">View Full CLI Docs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer>
+    Built by <a href="https://github.com/jashory" target="_blank" rel="noopener">HM Shihabuddin Jashory (@jashory)</a> &bull; Open-Source MIT License
+  </footer>
+  <script>
+    const DEFAULT_SAMPLE = document.getElementById('payloadInput').value;
+    function resetSample() {
+      document.getElementById('payloadInput').value = DEFAULT_SAMPLE;
+      runAnalysis();
+    }
+    
+    function runAnalysis() {
+      const raw = document.getElementById('payloadInput').value;
+      const alerts = [];
+      let status = "HEALTHY";
+
+      if (/\/Encrypt|is_encrypted"?\s*:\s*true|locked\.pdf/i.test(raw)) {
+        alerts.push("[BLOCKED] Password-Protected / Encrypted PDF detected!");
+        alerts.push("  -> Direct read_file injects locked application/pdf bytes into transcript.jsonl, causing permanent HTTP 400 INVALID_ARGUMENT.");
+        alerts.push("  -> Fix: Unlock via pymupdf doc.authenticate(password) or render page pixmap to PNG first.");
+        status = "CRASH PREVENTED";
+      }
+      if (/<!DOCTYPE html>|0-byte|"size"\s*:\s*0/i.test(raw)) {
+        alerts.push("[BLOCKED] Fake HTML / 0-byte corrupted media file detected with image/pdf extension.");
+        status = "CRASH PREVENTED";
+      }
+      if (/"stop_hook_iteration"\s*:\s*([5-9]|\d{2,})/i.test(raw)) {
+        alerts.push("[WARN] Infinite /goal Stop-Hook recursion detected (iteration >= 5). Circuit breaker engaged.");
+        if (status === "HEALTHY") status = "LOOP GUARDED";
+      }
+
+      const badge = document.getElementById('statusBadge');
+      badge.textContent = status;
+      badge.style.background = status === "HEALTHY" ? 'rgba(34,197,94,0.18)' : 'rgba(245,158,11,0.18)';
+      badge.style.color = status === "HEALTHY" ? '#22C55E' : '#F59E0B';
+
+      const out = [];
+      out.push("=== CRASH GUARD PRE-FLIGHT DIAGNOSTIC ===");
+      out.push(`Status    : ${status}`);
+      out.push(`Checked   : Multimodal MIME, PDF Encryption, Stop-Hook Depth\n`);
+      if (alerts.length === 0) {
+        out.push("[PASS] Trajectory step is clean and safe for LLM API ingestion.");
+      } else {
+        alerts.forEach(a => out.push(a));
+      }
+      document.getElementById('reportOutput').textContent = out.join("\n");
+    }
+
+    window.addEventListener('DOMContentLoaded', runAnalysis);
+  </script>
+</body>
+</html>

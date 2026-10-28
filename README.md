@@ -1,5 +1,16 @@
 # 🛡️ AGY & Claude Code Crash Guard + Cross-IDE Session Sync Kit (v2.0)
 
+<p align="center">
+  <a href="https://jashory.github.io/agy-claude-crash-guard-kit/"><img src="https://img.shields.io/badge/Live_Browser_Playground-Try_Now-22C55E?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Browser Playground"/></a>
+  <a href="https://github.com/jashory/agy-claude-crash-guard-kit/releases/tag/v2.0.0"><img src="https://img.shields.io/badge/Release-v2.0.0-38BDF8?style=for-the-badge&logo=github&logoColor=white" alt="Release v2.0.0"/></a>
+  <a href="https://github.com/jashory/agy-claude-crash-guard-kit/blob/main/action.yml"><img src="https://img.shields.io/badge/GitHub_Action-Ready-F59E0B?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Action Ready"/></a>
+</p>
+
+<p align="center">
+  <img src="assets/terminal-demo.svg" alt="agy-claude-crash-guard-kit terminal preview" width="860"/>
+</p>
+
+
 **Stop losing 500+ step coding sessions to permanent `HTTP 400 INVALID_ARGUMENT` and `30.000MB message limit` trajectory poisoning.**
 
 Built by **HM Shihabuddin Jashory (Shihab)** — [Vision Flow](https://visionflowgroup.com)
@@ -43,3 +54,17 @@ the raw binary is permanently appended into `transcript.jsonl`. Every subsequent
    - Automatically syncs missing conversation turns between **Claude Desktop App** and **Claude Code VS Code / Antigravity IDE** via the `UserPromptSubmit` hook without duplicate injection.
 3. **`SKILL.md` + `install.py` + `pyproject.toml`**:
    - Works both as an autonomous Agent Skill and as a standalone CLI (`agy-crash-guard`).
+
+## GitHub Actions Integration (`action.yml`)
+
+Use `agy-claude-crash-guard-kit` directly inside any CI/CD workflow:
+
+```yaml
+- name: Run agy-claude-crash-guard-kit
+  uses: jashory/agy-claude-crash-guard-kit@v2.0.0
+```
+
+## Live Interactive Browser Playground
+
+Test payloads directly in your browser (100% client-side, zero installation required):
+**[https://jashory.github.io/agy-claude-crash-guard-kit/](https://jashory.github.io/agy-claude-crash-guard-kit/)**
