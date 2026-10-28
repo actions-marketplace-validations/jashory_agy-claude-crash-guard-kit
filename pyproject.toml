@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agy-claude-crash-guard-kit"
+version = "2.0.0"
+description = "PreToolUse Multimodal Crash Firewall, Post-Edit Verification Gate & Desktop-to-IDE Session Sync for Antigravity and Claude Code"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+authors = [
+  { name = "HM Shihabuddin Jashory (Shihab)", email = "contact@visionflowgroup.com" }
+]
+keywords = ["claude-code", "antigravity", "ai-agent", "mcp", "hooks", "crash-guard", "skill"]
+dependencies = []
+
+[project.optional-dependencies]
+pdf = ["pymupdf>=1.23.0"]
+
+[project.scripts]
+agy-crash-guard = "crash_guard:main"
+claude-session-sync = "session_sync:main"
+agy-crash-guard-install = "install:main"
+
+[tool.setuptools]
+py-modules = ["crash_guard", "session_sync", "install"]
