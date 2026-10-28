@@ -8,19 +8,19 @@ Built by **HM Shihabuddin Jashory (Shihab)** — [Vision Flow](https://visionflo
 
 ## ⚡ 1. Install via AI Agent (Claude Code, Antigravity, Cursor, Codex)
 Paste this single prompt into your AI coding agent:
-> **Prompt:** `Clone https://github.com/visionflow-bd/agy-claude-crash-guard-kit and run "python install.py" to install the Crash Guard hooks, Session Sync, and Agent Skill.`
+> **Prompt:** `Clone https://github.com/jashory/agy-claude-crash-guard-kit and run "python install.py" to install the Crash Guard hooks, Session Sync, and Agent Skill.`
 
 ## 💻 2. Install via CLI (Terminal / Skills CLI / pip)
 ```bash
 # Option A: Agent Skills CLI (Claude Code / Antigravity / Cursor)
-npx skills add visionflow-bd/agy-claude-crash-guard-kit
+npx skills add jashory/agy-claude-crash-guard-kit
 
 # Option B: Direct Git Clone + 1-Command Installer (Installs Hooks + Skills)
-git clone https://github.com/visionflow-bd/agy-claude-crash-guard-kit.git
+git clone https://github.com/jashory/agy-claude-crash-guard-kit.git
 cd agy-claude-crash-guard-kit && python install.py
 
 # Option C: Global CLI Tool via pip / uv
-pip install git+https://github.com/visionflow-bd/agy-claude-crash-guard-kit.git
+pip install git+https://github.com/jashory/agy-claude-crash-guard-kit.git
 ```
 
 ---
